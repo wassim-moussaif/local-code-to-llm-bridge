@@ -1,0 +1,333 @@
+/* Styling for Injected Elements inside AI Studio, ChatGPT, and Claude */
+
+/* Floating Selection Tooltip Pill Container */
+.codebridge-selection-tooltip-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #0f172a;
+  padding: 4px;
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.15);
+  z-index: 999999;
+  user-select: none;
+  animation: codebridge-pop 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.codebridge-tooltip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  height: 26px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.codebridge-tooltip-push {
+  background: #0284c7;
+  color: #ffffff !important;
+}
+.codebridge-tooltip-push:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+}
+
+.codebridge-tooltip-save {
+  background: #1e293b;
+  color: #38bdf8 !important;
+  border: 1px solid #0284c7;
+}
+.codebridge-tooltip-save:hover {
+  background: #0284c7;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+@keyframes codebridge-pop {
+  0% { opacity: 0; transform: scale(0.9) translateY(4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.codebridge-push-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #0284c7;
+  color: #ffffff !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  height: 32px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.15s ease;
+  z-index: 10;
+  user-select: none;
+  margin: 0 4px;
+}
+
+.codebridge-push-btn:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+}
+
+.codebridge-pull-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #0f172a;
+  color: #38bdf8 !important;
+  border: 1px solid #0284c7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-left: 8px;
+  user-select: none;
+}
+
+.codebridge-pull-btn:hover {
+  background: #0284c7;
+  color: #ffffff !important;
+}
+
+.codebridge-pull-btn.success {
+  background: #065f46;
+  border-color: #10b981;
+  color: #a7f3d0 !important;
+}
+
+.codebridge-pull-btn.error {
+  background: #7f1d1d;
+  border-color: #ef4444;
+  color: #fecaca !important;
+}
+
+/* Modal Picker (Push Local Files) */
+.codebridge-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.codebridge-modal {
+  width: 580px;
+  max-width: 90vw;
+  max-height: 80vh;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.codebridge-modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid #1e293b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.codebridge-modal-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.codebridge-modal-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+}
+.codebridge-modal-close:hover {
+  color: #ffffff;
+}
+
+.codebridge-search-bar {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.codebridge-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f8fafc;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.codebridge-search-input:focus {
+  border-color: #38bdf8;
+}
+
+.codebridge-list-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #090d16;
+  border-bottom: 1px solid #1e293b;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.codebridge-select-all-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.codebridge-select-all-label:hover {
+  color: #f8fafc;
+}
+
+.codebridge-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.codebridge-link-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+
+.codebridge-link-btn:hover {
+  color: #38bdf8;
+}
+
+.codebridge-file-list {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 380px;
+  padding: 8px 0;
+}
+
+.codebridge-file-item {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.codebridge-file-item:hover,
+.codebridge-file-item.selected {
+  background: #1e293b;
+}
+
+.codebridge-file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.codebridge-file-path {
+  font-family: monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.codebridge-file-size {
+  font-size: 11px;
+  color: #64748b;
+  font-family: monospace;
+}
+
+.codebridge-modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #1e293b;
+  background: #090d16;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.codebridge-btn-submit {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.codebridge-btn-submit:hover {
+  background: #0369a1;
+}
+
+/* Inline Save Path Popover */
+.codebridge-save-dialog {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #0f172a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #334155;
+  margin-left: 8px;
+}
+
+.codebridge-save-input {
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 3px;
+  color: #e2e8f0;
+  font-family: monospace;
+  font-size: 11px;
+  padding: 2px 6px;
+  width: 140px;
+}

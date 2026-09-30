@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Local Code-to-LLM Bridge",
+  "version": "1.0.0",
+  "description": "Seamlessly push local code into LLMs (AI Studio, ChatGPT, Claude) and pull generated snippets straight to local disk via localhost:3387.",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Code-to-LLM Bridge"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://localhost:3387/*",
+    "http://127.0.0.1:3387/*",
+    "https://aistudio.google.com/*",
+    "https://gemini.google.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://aistudio.google.com/*",
+        "https://gemini.google.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

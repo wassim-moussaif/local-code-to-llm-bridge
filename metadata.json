@@ -1,0 +1,6 @@
+{
+  "name": "Local Code-to-LLM Bridge Hub",
+  "description": "Bi-directional bridge between your local codebase on localhost:3387 and LLMs (Google AI Studio, ChatGPT, Claude) with Manifest V3 extension.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
