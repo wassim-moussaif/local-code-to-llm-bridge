@@ -1,46 +1,170 @@
-# Local Code-to-LLM Bridge
+# Local Code-to-LLM Bridge ⚡
 
-Fast, ADHD-friendly, bi-directional link between your local project workspace and browser LLMs (**Google AI Studio**, **ChatGPT**, and **Claude**).
+Fast, ADHD-friendly, bi-directional link between your local project workspace and browser LLMs (**Google AI Studio**, **Google Gemini**, **ChatGPT**, and **Claude**).
 
-- **Port:** `localhost:3387`
-- **Security:** Strict directory isolation (prevents path traversal outside your project folder).
-- **Extension:** Manifest V3 with background proxying and reactive DOM observers.
+- **Backend:** Python FastAPI running on `localhost:3387`
+- **Frontend / Extension:** Chrome Manifest V3 extension with native OS File Explorer integration
+- **Security:** Strict directory boundary enforcement (no path traversal outside active workspace)
 
 ---
 
-## ⚡ Quick Start in 2 Minutes
+## 🚀 Key Features
 
-### Step 1: Run the Local Python Backend
+1. **⚡ Push Local Code to LLM Prompt:**
+   - Click the inline **"⚡ Push Code"** button (or press `Ctrl + Shift + K`).
+   - Pick files using fuzzy search, select multiple, and inject markdown-formatted blocks right into the prompt.
+2. **⚡ Push Highlighted Selection:**
+   - Highlight any text or code snippet in the browser.
+   - Click the floating **"⚡ Push"** pill to instantly send it to the prompt box wrapped in triple backticks.
+3. **💾 Pull / Save to Local Disk (Native File Explorer):**
+   - Click **"💾 Save to Local"** on any LLM code block, or highlight any text to click the floating **"💾 Save to Local"** pill.
+   - Automatically opens your **native OS File Explorer / "Save As" dialog pre-navigated to your project folder** (zero manual path typing!).
+4. **📁 1-Click Folder Picker:**
+   - In the extension popup, click **"📁 Browse Folder"** to visually pick your project directory using Windows Explorer, macOS Finder, or Linux file dialog.
 
-Ensure you have Python 3.9+ installed:
+---
 
+## ⚡ Quick Start (2 Minutes)
+
+### Step 1: Start the Local Backend Server
+
+Make sure you have **Python 3.9+** installed:
+
+#### Windows:
+```bash
+# Double-click start-backend.bat, or run:
+cd backend
+pip install -r requirements.txt
+python main.py --workspace "C:\path\to\your\project"
+```
+
+#### macOS / Linux:
 ```bash
 cd backend
 pip install -r requirements.txt
-python main.py --workspace /path/to/your/project
+python3 main.py --workspace ~/path/to/your/project
 ```
 
-The server will start on `http://127.0.0.1:3387`.
-
-### Step 2: Load the Browser Extension
-
-1. Open Chrome, Brave, or Edge and go to `chrome://extensions/`.
-2. Enable **Developer mode** (toggle in top-right corner).
-3. Click **"Load unpacked"**.
-4. Select the `extension/` directory from this repository.
-5. Click the extension icon in your toolbar to verify the status shows **Online**.
+The backend starts listening on `http://127.0.0.1:3387`.
 
 ---
 
-## 🚀 How to Use
+### Step 2: Install the Browser Extension
 
-### 1. Push Local Code into Prompt (Local $\rightarrow$ LLM)
-- Open **Google AI Studio**, **ChatGPT**, or **Claude**.
-- Click the **"⚡ Push Code"** button beside the prompt box (or press `Ctrl + Shift + K`).
-- Select the files you want to include.
-- Click **"Inject into Prompt"** — the code is formatted with markdown file paths and added to your prompt!
+1. Open **Chrome**, **Brave**, or **Edge** and navigate to `chrome://extensions/`.
+2. Toggle on **Developer mode** in the top-right corner.
+3. Click the **"Load unpacked"** button.
+4. Select the `extension/` folder in this repository.
+5. Pin the **Code-to-LLM Bridge** icon to your browser toolbar.
+6. Click the extension icon — it should show `🟢 Online` connected to `http://127.0.0.1:3387`.
 
-### 2. Pull Generated Code Back to Disk (LLM $\rightarrow$ Local)
-- When the LLM generates a code snippet, a **"💾 Save to Local"** button will appear on the code block.
-- If the model included a file path comment (e.g. `// src/App.tsx`), it auto-populates.
-- Click to save — the file is immediately written to your local project disk!
+---
+
+## 🎯 Supported LLM Platforms
+
+- **Google AI Studio** (`https://aistudio.google.com/*`)
+- **Google Gemini** (`https://gemini.google.com/*`)
+- **ChatGPT** (`https://chatgpt.com/*`)
+- **Claude** (`https://claude.ai/*`)
+
+---
+
+## 💻 CLI Commands & Arguments Reference
+
+You can launch the backend server with custom flags directly from the command line:
+
+```bash
+python backend/main.py [OPTIONS]
+```
+
+### Available CLI Flags:
+
+| Flag | Short | Default | Description |
+|---|---|---|---|
+| `--workspace` | `-w` | `.` (Current directory) | Absolute or relative path to your local project folder to mount as workspace |
+| `--port` | `-p` | `3387` | Local port for FastAPI server (`localhost:3387`) |
+| `--host` | | `127.0.0.1` | Network interface address to bind to |
+| `--help` | `-h` | | Show help message with all available options |
+
+### Common CLI Examples:
+
+```bash
+# 1. Run in current directory (default)
+python backend/main.py
+
+# 2. Run targeting a specific workspace folder
+python backend/main.py --workspace "D:\Projects\my-react-app"
+
+# 3. Run on a different port (e.g. 5000)
+python backend/main.py --workspace ~/projects/ai-app --port 5000
+
+# 4. Using the ready-to-run scripts:
+# Windows:
+.\start-backend.bat
+
+# macOS / Linux:
+chmod +x ./start-backend.sh
+./start-backend.sh
+```
+
+---
+
+## 🛠️ How to Use
+
+| Action | How to do it | What happens |
+|---|---|---|
+| **Push Full Files** | Click **⚡ Push Code** near prompt or press <kbd>Ctrl+Shift+K</kbd> | Opens local file selector modal; injects selected files with paths into prompt |
+| **Push Text Selection** | Highlight any text/code on page $\rightarrow$ click floating **⚡ Push** | Injects selected text formatted in markdown backticks into prompt |
+| **Save Code to Local** | Click **💾 Save to Local** on code block header | Opens native OS Save File dialog right in your project folder |
+| **Save Selection to Local** | Highlight text/code $\rightarrow$ click floating **💾 Save to Local** | Opens native OS Save File dialog with selected text |
+| **Switch Workspace** | Open extension popup $\rightarrow$ click **📁 Browse Folder** | Opens native OS directory picker to choose a new project folder |
+
+---
+
+## 📦 How to Push to GitHub
+
+Follow these steps to initialize and push your repository to GitHub:
+
+### 1. Initialize Git (if not already done)
+```bash
+git init
+```
+
+### 2. Verify `.gitignore`
+Make sure `node_modules/`, `build/`, `dist/`, and Python cache (`__pycache__/`, `.venv/`) are ignored:
+```bash
+git status
+```
+
+### 3. Stage and Commit Files
+```bash
+git add .
+git commit -m "feat: initial release of Local Code-to-LLM Bridge"
+```
+
+### 4. Create a New Repository on GitHub
+1. Go to [github.com/new](https://github.com/new).
+2. Choose a repository name (e.g. `code-to-llm-bridge`).
+3. Leave "Initialize this repository with a README" **unchecked** (since you already have one).
+4. Click **Create repository**.
+
+### 5. Link and Push to GitHub
+Copy the commands shown on GitHub:
+```bash
+# Rename default branch to main
+git branch -M main
+
+# Add your remote GitHub URL (replace with your repo URL)
+git remote add origin https://github.com/YOUR_USERNAME/code-to-llm-bridge.git
+
+# Push code to GitHub
+git push -u origin main
+```
+
+---
+
+## 🔒 Security Architecture
+
+- **Root Lockdown:** All read/write operations are resolved against the canonical `WORKSPACE_DIR` using `pathlib.Path.resolve()`.
+- **Traversal Prevention:** Any attempt to use `../` to access files outside the workspace raises a `403 Forbidden`.
+- **Background Proxy:** Browser extension network requests are routed through `background.js` service worker, preserving strict web CORS and CSP rules.
