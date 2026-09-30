@@ -121,47 +121,7 @@ chmod +x ./start-backend.sh
 
 ---
 
-## 📦 How to Push to GitHub
 
-Follow these steps to initialize and push your repository to GitHub:
-
-### 1. Initialize Git (if not already done)
-```bash
-git init
-```
-
-### 2. Verify `.gitignore`
-Make sure `node_modules/`, `build/`, `dist/`, and Python cache (`__pycache__/`, `.venv/`) are ignored:
-```bash
-git status
-```
-
-### 3. Stage and Commit Files
-```bash
-git add .
-git commit -m "feat: initial release of Local Code-to-LLM Bridge"
-```
-
-### 4. Create a New Repository on GitHub
-1. Go to [github.com/new](https://github.com/new).
-2. Choose a repository name (e.g. `code-to-llm-bridge`).
-3. Leave "Initialize this repository with a README" **unchecked** (since you already have one).
-4. Click **Create repository**.
-
-### 5. Link and Push to GitHub
-Copy the commands shown on GitHub:
-```bash
-# Rename default branch to main
-git branch -M main
-
-# Add your remote GitHub URL (replace with your repo URL)
-git remote add origin https://github.com/YOUR_USERNAME/code-to-llm-bridge.git
-
-# Push code to GitHub
-git push -u origin main
-```
-
----
 
 ## 🔒 Security Architecture
 
