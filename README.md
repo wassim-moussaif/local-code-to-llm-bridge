@@ -1,6 +1,6 @@
 # Local Code-to-LLM Bridge ⚡
 
-Fast, ADHD-friendly, bi-directional link between your local project workspace and browser LLMs (**Google AI Studio**, **Google Gemini**, **ChatGPT**, and **Claude**).
+Fast, bi-directional link between your local project workspace and browser LLMs (**Google AI Studio**, **Google Gemini**, **ChatGPT**, and **Claude**).
 
 - **Backend:** Python FastAPI running on `localhost:3387`
 - **Frontend / Extension:** Chrome Manifest V3 extension with native OS File Explorer integration
@@ -30,15 +30,27 @@ Fast, ADHD-friendly, bi-directional link between your local project workspace an
 
 Make sure you have **Python 3.9+** installed:
 
-#### Windows:
+#### 🪟 Windows (Recommended)
+You can simply double-click `start-backend.bat` in your file explorer, or run it from the terminal:
 ```bash
-# Double-click start-backend.bat, or run:
+.\start-backend.bat
+```
+
+*Manual alternative:*
+```bash
 cd backend
 pip install -r requirements.txt
 python main.py --workspace "C:\path\to\your\project"
 ```
 
-#### macOS / Linux:
+#### 🍎 macOS / 🐧 Linux (Recommended)
+You can use the provided bash script to automatically set up and run the server:
+```bash
+chmod +x ./start-backend.sh
+./start-backend.sh
+```
+
+*Manual alternative:*
 ```bash
 cd backend
 pip install -r requirements.txt
