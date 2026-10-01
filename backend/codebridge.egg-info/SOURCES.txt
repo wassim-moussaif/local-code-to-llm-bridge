@@ -1,0 +1,12 @@
+README.md
+setup.py
+backend/file_service.py
+backend/folder_picker.py
+backend/main.py
+backend/security.py
+backend/codebridge.egg-info/PKG-INFO
+backend/codebridge.egg-info/SOURCES.txt
+backend/codebridge.egg-info/dependency_links.txt
+backend/codebridge.egg-info/entry_points.txt
+backend/codebridge.egg-info/requires.txt
+backend/codebridge.egg-info/top_level.txt

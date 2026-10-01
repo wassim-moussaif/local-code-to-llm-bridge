@@ -4,7 +4,7 @@ setuptools.setup(
     name="codebridge",
     version="1.0.0",
     description="Local Code-to-LLM Bridge server on localhost:3387",
-    py_modules=["main", "security", "file_service"],
+    py_modules=["main", "security", "file_service", "folder_picker"],
     package_dir={"": "backend"},
     install_requires=[
         "fastapi>=0.110.0",

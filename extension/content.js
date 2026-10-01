@@ -93,7 +93,7 @@
       // Create toolbar / header if needed
       const btn = document.createElement('button');
       btn.className = 'codebridge-pull-btn';
-      btn.innerHTML = suggestedName 
+      btn.innerHTML = suggestedName
         ? `<span>💾 Save to <b>${suggestedName.split('/').pop()}</b></span>`
         : `<span>💾 Save to Local</span>`;
       btn.title = suggestedName ? `Save directly to ${suggestedName}` : 'Save code block to local project';
@@ -106,7 +106,7 @@
 
       // Target placement: find top bar or prepend to pre
       const headerBar = block.querySelector('div[class*="header"], div[class*="toolbar"], .code-block-header') ||
-                        block.previousElementSibling?.querySelector('div[class*="header"]');
+        block.previousElementSibling?.querySelector('div[class*="header"]');
 
       if (headerBar) {
         headerBar.appendChild(btn);
@@ -527,6 +527,7 @@
   // ==========================================
 
   let floatingTooltip = null;
+  let activeSelectedText = '';
 
   function createFloatingTooltip() {
     if (floatingTooltip) return floatingTooltip;
@@ -555,10 +556,9 @@
     pushBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const selection = window.getSelection();
-      const selectedText = selection ? selection.toString() : '';
-      if (selectedText && selectedText.trim()) {
-        injectRawSnippetIntoChat(selectedText);
+      const textToPush = activeSelectedText || (window.getSelection() ? window.getSelection().toString() : '');
+      if (textToPush && textToPush.trim()) {
+        injectRawSnippetIntoChat(textToPush);
       }
       hideFloatingTooltip();
     });
@@ -566,11 +566,10 @@
     saveBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const selection = window.getSelection();
-      const selectedText = selection ? selection.toString() : '';
-      if (selectedText && selectedText.trim()) {
-        const suggested = parseFilenameFromSnippet(selectedText);
-        handleSaveSnippet(selectedText, suggested, saveBtn);
+      const textToSave = activeSelectedText || (window.getSelection() ? window.getSelection().toString() : '');
+      if (textToSave && textToSave.trim()) {
+        const suggested = parseFilenameFromSnippet(textToSave);
+        handleSaveSnippet(textToSave, suggested, saveBtn);
       }
       hideFloatingTooltip();
     });
@@ -584,43 +583,63 @@
     }
   }
 
+  function checkAndShowTooltip(targetEl) {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
+      hideFloatingTooltip();
+      return;
+    }
+
+    const text = selection.toString().trim();
+    if (!text || text.length < 3) {
+      hideFloatingTooltip();
+      return;
+    }
+
+    // Don't show tooltip when selecting inside chat inputs / textareas
+    if (targetEl && (targetEl.tagName === 'TEXTAREA' || targetEl.tagName === 'INPUT' || targetEl.isContentEditable)) {
+      hideFloatingTooltip();
+      return;
+    }
+
+    activeSelectedText = selection.toString();
+
+    try {
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      if (rect && (rect.width > 0 || rect.height > 0)) {
+        const tooltip = createFloatingTooltip();
+        const top = window.scrollY + rect.top - 46;
+        const left = window.scrollX + rect.left + (rect.width / 2) - 85;
+
+        tooltip.style.top = `${Math.max(10, top)}px`;
+        tooltip.style.left = `${Math.max(10, left)}px`;
+        tooltip.style.display = 'flex';
+        return;
+      }
+    } catch (err) {
+      console.warn('[CodeBridge] Tooltip position error:', err);
+    }
+
+    hideFloatingTooltip();
+  }
+
   document.addEventListener('mouseup', (e) => {
     // If clicking inside the tooltip, ignore
     if (floatingTooltip && floatingTooltip.contains(e.target)) return;
-
-    // Small timeout to allow browser selection calculation
-    setTimeout(() => {
-      const selection = window.getSelection();
-      const text = selection ? selection.toString().trim() : '';
-
-      // Don't show tooltip inside chat inputs / textareas
-      if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT' || e.target.isContentEditable)) {
-        hideFloatingTooltip();
-        return;
-      }
-
-      if (text && text.length > 5) {
-        const range = selection.getRangeAt(0);
-        const rect = range.getBoundingClientRect();
-
-        if (rect && (rect.width > 0 || rect.height > 0)) {
-          const tooltip = createFloatingTooltip();
-          const top = window.scrollY + rect.top - 42;
-          const left = window.scrollX + rect.left + (rect.width / 2) - 80;
-
-          tooltip.style.top = `${Math.max(10, top)}px`;
-          tooltip.style.left = `${Math.max(10, left)}px`;
-          tooltip.style.display = 'flex';
-          return;
-        }
-      }
-      hideFloatingTooltip();
-    }, 15);
+    setTimeout(() => checkAndShowTooltip(e.target), 30);
   });
 
-  document.addEventListener('selectionchange', () => {
-    const sel = window.getSelection();
-    if (!sel || !sel.toString().trim()) {
+  document.addEventListener('keyup', (e) => {
+    // Also support keyboard text selection (Shift + arrows)
+    if (e.shiftKey) {
+      setTimeout(() => checkAndShowTooltip(e.target), 30);
+    }
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (floatingTooltip && !floatingTooltip.contains(e.target)) {
       hideFloatingTooltip();
     }
   });

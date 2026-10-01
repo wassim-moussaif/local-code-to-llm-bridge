@@ -1,0 +1,2 @@
+[console_scripts]
+codebridge = main:run_cli

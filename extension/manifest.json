@@ -18,21 +18,19 @@
   "host_permissions": [
     "http://localhost:3387/*",
     "http://127.0.0.1:3387/*",
-    "https://aistudio.google.com/*",
-    "https://gemini.google.com/*",
-    "https://chatgpt.com/*",
-    "https://claude.ai/*"
+    "<all_urls>"
   ],
   "content_scripts": [
     {
       "matches": [
-        "https://aistudio.google.com/*",
-        "https://gemini.google.com/*",
-        "https://chatgpt.com/*",
-        "https://claude.ai/*"
+        "<all_urls>"
       ],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle"
     }
   ]
